@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+canvas {
+	border: 1px solid #9C9898;
+}
+
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.5.js"></script>
+    <script src="js/board.js"></script>
+    
+  </head>
+  <body onmousedown="return false;">
+  
+  <h2>Hexagon Game</h2>
+  <table>
+   <tr>
+    <td>Player 1:</td>
+    <td>{{player1}}</td>
+   </tr>
+   <tr>
+    <td>Player 2:</td>
+    <td>{{player2}}</td>
+   </tr>
+  </table>
+  
+   <div id="game-board" class="game-board"></div>
+   
+   <form method="post">
+      <input type="text" name="gameid" hidden="hidden" value="{{gameid}}" />
+      <input type="text" name="row" id="row" hidden="hidden" />
+      <input type="text" name="col" id="col" hidden="hidden" />
+
+	  <input type="submit" name="submit" value="Submit Move" />
+	  <input type="submit" name="cancel" value="Cancel" />
+   </form>
+   
+  </body>
+</html>

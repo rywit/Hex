@@ -1,4 +1,4 @@
-from Models import User
+from Models.User import User
 import hmac
 import jinja2
 import os

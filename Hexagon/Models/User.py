@@ -7,7 +7,7 @@ def users_key( group = "default" ):
     return db.Key.from_path( "users", group )
 
 def make_salt( length = 5 ):
-    return ''.join( random.choice( letters ) for x in xrange( length ) )
+    return ''.join( random.choice( letters ) for x in xrange( length ) ) #@UnusedVariable
 
 def make_pw_hash( name, pw, salt = None ):
     if not salt:
@@ -26,11 +26,11 @@ class User( db.Model ):
 
     @classmethod
     def by_id(cls, uid):
-        return User.get_by_id (uid, parent = users_key() )
+        return User.get_by_id ( uid, parent = users_key() )
 
     @classmethod
     def by_name( cls, name ):
-        u = User.all().filter( "name =", name).get()
+        u = User.all().filter( "name =", name ).get()
         return u
 
     @classmethod
