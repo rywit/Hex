@@ -1,10 +1,22 @@
 from BaseHandler import BaseHandler
-from GameLogic.BoardBuilder import BoardBuilder
-from Models.Game import Game
+from Views.GameView import GameView
+from Models.User import User
+from collections import namedtuple
 
 class NewChallenge( BaseHandler ):
     def get(self):
-        self.render( "new-challenge.html" )
+        
+        all_users = User.all().fetch( limit = 10 )
+        all_users = list( all_users )
+
+        ## Define a UserItem as a name and id
+        UserItem = namedtuple( "UserItem", [ "name", "id" ] )
+        
+        users = []
+        for user in all_users:
+            users.append( UserItem( user.name, user.key().id() ) )
+        
+        self.render( "new-challenge.html", users = users )
 
     def post(self):
 
@@ -13,11 +25,9 @@ class NewChallenge( BaseHandler ):
             self.redirect( "/login" )
             return
 
-        player2id = self.request.get( "player2" )
-        board = BoardBuilder.get_new_board()
+        ## Create new GameView
+        player2 = self.request.get( "player2" )
+
+        game = GameView( player1 = self.user.key().id(), player2 = player2 )
         
-        game = Game( player1 = self.user.key(), player2 = player2id, status = "CHALLENGE", board = board )
-        
-        game.put()
-        
-        self.redirect( "/play?gameid=123" )
+        self.redirect( "/play?gameid=%s" % game.gameid )

@@ -1,0 +1,29 @@
+<html>
+ <head>
+ </head>
+ <body>
+  <h2>Current Games</h2>
+    {% if current %}
+  <div>You have some games</div>
+    {% else %}
+  <div class="faded">No current games</div>    
+    {% endif %}
+  <hr>
+  
+  <h2>Pending Challenges</h2>
+    {% if pending %}
+  <div>You have some pending games</div>
+    {% else %}
+  <div class="faded">No pending games</div>    
+    {% endif %}
+  <hr>
+
+  <h2>Finished Games</h2>
+    {% if finished %}
+  <div>You have some finished</div>
+    {% else %}
+  <div class="faded">No finished games</div>    
+    {% endif %}
+
+ </body>
+</html>

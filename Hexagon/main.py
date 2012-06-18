@@ -1,9 +1,11 @@
-import webapp2
+from Handlers.Home import Home
 from Handlers.Login import Login
 from Handlers.Logout import Logout
-from Handlers.Register import Register
-from Handlers.PlayGame import PlayGame
 from Handlers.NewChallenge import NewChallenge
+from Handlers.PlayGame import PlayGame
+from Handlers.Register import Register
+
+import webapp2
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -16,6 +18,7 @@ app = webapp2.WSGIApplication([( "/", MainPage ),
                                ( "/logout", Logout ),
                                ( "/play", PlayGame ),
                                ( "/challenge", NewChallenge ),
-                               ( "/register", Register )
+                               ( "/register", Register ),
+                               ( "/home", Home )
                                ],
                               debug=True)

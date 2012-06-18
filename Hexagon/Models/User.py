@@ -25,8 +25,8 @@ class User( db.Model ):
     email = db.StringProperty()
 
     @classmethod
-    def by_id(cls, uid):
-        return User.get_by_id ( uid, parent = users_key() )
+    def by_id( cls, uid ):
+        return User.get_by_id( uid, parent = users_key() )
 
     @classmethod
     def by_name( cls, name ):

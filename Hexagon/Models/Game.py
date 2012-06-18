@@ -1,14 +1,23 @@
 from google.appengine.ext import db
 
-def games_key( group = "default" ):
-    return db.Key.from_path( "games", group )
-
 class Game( db.Model ):
     player1 = db.StringProperty( required = True )
     player2 = db.StringProperty( required = True )
     status = db.StringProperty( required = True )
     board = db.StringProperty( required = True )
+    turn = db.IntegerProperty( required = True )
+    winner = db.IntegerProperty( required = False )
 
     @classmethod
-    def get_by_id( self, gameid ):
-        return Game.get_by_id( gameid, parent = games_key() )
+    def by_id( cls, gameid ):
+        return Game.get_by_id( gameid, parent = cls.games_key() )
+    
+    @classmethod
+    def games_key( cls, group = "default" ):
+        return db.Key.from_path( "games", group )
+    
+    def update_state( self, player_num, board, status, winner ):
+        self.turn = player_num
+        self.board = board
+        self.status = status
+        self.winner = winner

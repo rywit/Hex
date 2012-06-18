@@ -20,8 +20,9 @@
           </td>
           <td>
             <select name="player2">
-             <option value="1">Jim</option>
-             <option value="2">Joe</option>
+             {% for user in users %}
+              <option value="{{user.id}}">{{user.name}}</option>
+             {% endfor %}
             </select>
           </td>
         </tr>

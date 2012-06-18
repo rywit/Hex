@@ -56,8 +56,8 @@ class Register( BaseHandler ):
             msg = 'That user already exists.'
             self.render('signup-form.html', error_username = msg)
         else:
-            u = User.register(self.username, self.password, self.email)
+            u = User.register( self.username, self.password, self.email )
             u.put()
 
-            self.login(u)
+            self.login( u )
             self.redirect( "/" )

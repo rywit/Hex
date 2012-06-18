@@ -14,8 +14,14 @@ canvas {
 
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.5.js"></script>
-    <script src="js/board.js"></script>
+    <script type="text/javascript" src="js/kinetic.js"></script>
+    
+    <script type="text/javascript">
+var board = {{board}};
+var playerNum = {{turn}};
+    </script>
+    
+    <script type="text/javascript" src="js/board.js"></script>
     
   </head>
   <body onmousedown="return false;">
@@ -29,6 +35,10 @@ canvas {
    <tr>
     <td>Player 2:</td>
     <td>{{player2}}</td>
+   </tr>
+   <tr>
+    <td>Status:</td>
+    <td>{{status}}</td>
    </tr>
   </table>
   
