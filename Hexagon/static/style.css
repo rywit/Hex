@@ -1,0 +1,65 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: #EDEDED;
+}
+
+#header {
+	background-color: black;
+	padding: 10px;
+	border-bottom: 5px solid #6666CC;
+	position: relative;
+}
+
+#header .title {
+	color: white;
+	font-size: 26px;
+}
+
+#content {
+	margin: 10px;
+}
+
+#footer {
+	background-color: #6666CC;
+	text-align: center;
+	font-size: 12px;
+	font-style: italic;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 3px;
+	color: white;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
+}
+
+.login-area {
+    font-size: 15px;
+    color: #AAAAAA;
+    position: absolute;
+	right: 10px;
+	bottom: 7px;
+}
+
+.login-link {
+    color: #AAAAAA;
+    text-decoration: none;
+}
+
+.login-link:visited {
+    color: #AAAAAA;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.hidelink a {
+    color: #000000;
+    text-decoration: none;
+}

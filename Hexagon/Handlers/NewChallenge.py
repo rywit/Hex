@@ -5,7 +5,7 @@ from collections import namedtuple
 
 class NewChallenge( BaseHandler ):
     def get(self):
-        
+
         all_users = User.all().fetch( limit = 10 )
         all_users = list( all_users )
 

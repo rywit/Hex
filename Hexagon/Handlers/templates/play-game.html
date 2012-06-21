@@ -1,18 +1,15 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <style>
+{% extends "base.html" %}
 
-body {
-	margin: 0px;
-	padding: 0px;
-}
+{% block title %}Login{% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
 canvas {
 	border: 1px solid #9C9898;
 }
-
     </style>
+    
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/kinetic.js"></script>
     
@@ -22,11 +19,10 @@ var playerNum = {{turn}};
     </script>
     
     <script type="text/javascript" src="js/board.js"></script>
-    
-  </head>
-  <body onmousedown="return false;">
-  
-  <h2>Hexagon Game</h2>
+{% endblock %}
+
+{% block content %}
+
   <table>
    <tr>
     <td>Player 1:</td>
@@ -44,6 +40,7 @@ var playerNum = {{turn}};
   
    <div id="game-board" class="game-board"></div>
    
+   {% if is_my_turn %}
    <form method="post">
       <input type="text" name="gameid" hidden="hidden" value="{{gameid}}" />
       <input type="text" name="row" id="row" hidden="hidden" />
@@ -52,6 +49,5 @@ var playerNum = {{turn}};
 	  <input type="submit" name="submit" value="Submit Move" />
 	  <input type="submit" name="cancel" value="Cancel" />
    </form>
-   
-  </body>
-</html>
+   {% endif %}   
+{% endblock %}

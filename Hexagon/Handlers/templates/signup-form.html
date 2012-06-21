@@ -1,16 +1,15 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-  <head>
-    <title>Sign Up</title>
+{% block title %}Sign Up{% endblock %}
+
+{% block head %}
+    {{ super() }}
     <style type="text/css">
-      .label {text-align: right}
-      .error {color: red}
+.label {text-align: right}
     </style>
+{% endblock %}
 
-  </head>
-
-  <body>
+{% block content %}
     <h2>Sign Up For A New Hex Account</h2>
     <form method="post">
       <table>
@@ -65,6 +64,4 @@
 
       <input type="submit">
     </form>
-  </body>
-
-</html>
+{% endblock %}

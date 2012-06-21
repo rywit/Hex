@@ -24,11 +24,14 @@ class PlayGame( BaseHandler ):
         player1 = User.by_id( int( game.player1 ) )
         player2 = User.by_id( int( game.player2 ) )
         
+        is_my_turn = self.user.key().id() == game.player_to_move()
+        
         self.render( "play-game.html",
                      player1 = player1.name,
                      player2 = player2.name,
                      board = board,
                      turn = game.turn,
+                     is_my_turn = is_my_turn,
                      status = game.status )
         
     def post( self ):
@@ -58,12 +61,12 @@ class PlayGame( BaseHandler ):
                 try:
                     game.update_game( user = self.user, row = int( row ), col = int( col ) )
                 except WrongTurnException as e:
-                    self.render( "error.html", message = e.message )
+                    self.render( "/play?gameid=%s" % gameid, error = e.message )
                     return
                 
                 ## Check game status and redirect accordingly
                 
-                self.redirect( "/" )
+                self.redirect( "/home" )
             else:
                 logging.error( "That's not a valid game" )
                 self.redirect( "/" )

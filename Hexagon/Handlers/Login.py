@@ -1,5 +1,5 @@
 from BaseHandler import BaseHandler
-from Models import User
+from Models.User import User
 
 class Login( BaseHandler ):
     def get(self):
@@ -12,7 +12,7 @@ class Login( BaseHandler ):
         u = User.login( username, password ) #@UndefinedVariable
         if u:
             self.login(u)
-            self.render( "welcome.html", username = username )
+            self.redirect( "/home" )
         else:
             msg = 'Invalid login'
             self.render( "login-form.html", error = msg )

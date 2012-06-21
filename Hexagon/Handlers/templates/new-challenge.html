@@ -1,16 +1,8 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-  <head>
-    <title>New Challenge</title>
-    <style type="text/css">
-      .error {color: red}
-    </style>
+{% block title %}New Challenge{% endblock %}
 
-  </head>
-
-  <body>
-
+{% block content %}
     <h2>Create New Game</h2>
     <form method="post">
       <table>
@@ -30,6 +22,4 @@
 
       <input type="submit" value="Send Challenge" />
     </form>
-  </body>
-
-</html>
+{% endblock %}

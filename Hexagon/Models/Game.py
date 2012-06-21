@@ -1,8 +1,8 @@
 from google.appengine.ext import db
 
 class Game( db.Model ):
-    player1 = db.StringProperty( required = True )
-    player2 = db.StringProperty( required = True )
+    player1 = db.IntegerProperty( required = True )
+    player2 = db.IntegerProperty( required = True )
     status = db.StringProperty( required = True )
     board = db.StringProperty( required = True )
     turn = db.IntegerProperty( required = True )

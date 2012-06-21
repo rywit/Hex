@@ -1,10 +1,13 @@
-<html>
- <head>
- </head>
- <body>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
   <h2>Current Games</h2>
     {% if current %}
-  <div>You have some games</div>
+     {% for game in current %}
+      <div class="game"><a href="/play?gameid={{game.gameid}}">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}}</a></div>
+     {% endfor %}
     {% else %}
   <div class="faded">No current games</div>    
     {% endif %}
@@ -24,6 +27,9 @@
     {% else %}
   <div class="faded">No finished games</div>    
     {% endif %}
-
- </body>
-</html>
+  <hr>
+    
+  <h2 class="hidelink"><a href="/challenge">New Game &gt;</a></h2>
+  
+    
+{% endblock %}

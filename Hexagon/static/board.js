@@ -23,19 +23,19 @@ $( document ).ready( function() {
 	
 	var stage = new Kinetic.Stage( {
 		container: "game-board",
-		width: 800,
-		height: 500
+		width: 550,
+		height: 375
 	} );
 
 	var layer = new Kinetic.Layer();
 
 	for ( var rownum = 0; rownum < 10; rownum++ ) {
 
-		var yPos = 50 + 2 * rownum * 22;
+		var yPos = 50 + 2 * rownum * 15;
 
 		for ( var colnum = 0; colnum < 10; colnum++ ) {
 
-			var xPos = 50 + 2 * colnum * 26 + rownum * 26;
+			var xPos = 50 + 2 * colnum * 17 + rownum * 17;
 
 			var squareState = board[ rownum ][ colnum ];
 			color = colors[ squareState ];
@@ -44,10 +44,10 @@ $( document ).ready( function() {
 				x: xPos,
 				y: yPos,
 				sides: 6,
-				radius: 30,
+				radius: 20,
 				fill: color,
 				stroke: "black",
-				strokeWidth: 2,
+				strokeWidth: 1,
 				draggable: false
 			} );
 			

@@ -5,7 +5,7 @@ Created on Jun 16, 2012
 '''
 from Models.Board import Board
 from Models.Game import Game
-from GameLogic.Exceptions import WrongTurnException
+from GameLogic.Exceptions import WrongTurnException, AlreadyCompleteException
 
 class GameView():
     
@@ -21,8 +21,8 @@ class GameView():
         self.board = Board()
         
         ## Save player info
-        self.player1 = str( player1 )
-        self.player2 = str( player2 )
+        self.player1 = int( player1 )
+        self.player2 = int( player2 )
         
         ## Save status
         self.status = "CHALLENGE"
@@ -57,11 +57,15 @@ class GameView():
     def update_game( self, user, row, col ):
         
         ## Make sure the correct user is making the move
-        player_to_move = self.player1 if self.turn == 1 else self.player2
+        player_to_move = self.player_to_move()
         
         ## If the wrong player moved, raise an exception
         if str( user.key().id() ) != str( player_to_move ):
             raise WrongTurnException( "It is not your turn to move" )
+        
+        ## If this game is already complete, raise an exception
+        if self.status == "COMPLETE":
+            raise AlreadyCompleteException( "The game is already finished" )
         
         ## Update the board
         self.board.update_board( row, col, self.turn )
@@ -81,3 +85,9 @@ class GameView():
         
         ## Save underlying Game to the database
         self.game.put()
+        
+    def player_to_move( self ):
+        ## Make sure the correct user is making the move
+        return self.player1 if self.turn == 1 else self.player2
+
+
