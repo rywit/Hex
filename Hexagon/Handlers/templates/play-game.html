@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Play Game{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -8,6 +8,28 @@
 canvas {
 	border: 1px solid #9C9898;
 }
+
+table {
+	border: 1px solid #444;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+thead th {
+	background-color: #333399;
+	color: white;
+	font-weight: bold;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-bottom: 1px solid #333366;
+}
+
+tbody td {
+	padding: 5px;
+	background-color: white;
+	font-style: italic;
+}
+
     </style>
     
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -16,6 +38,13 @@ canvas {
     <script type="text/javascript">
 var board = {{board}};
 var playerNum = {{turn}};
+
+{% if is_my_turn %}
+var is_disabled = false;
+{% else %}
+var is_disabled = true;
+{% endif %}
+
     </script>
     
     <script type="text/javascript" src="js/board.js"></script>
@@ -24,18 +53,20 @@ var playerNum = {{turn}};
 {% block content %}
 
   <table>
-   <tr>
-    <td>Player 1:</td>
-    <td>{{player1}}</td>
-   </tr>
-   <tr>
-    <td>Player 2:</td>
-    <td>{{player2}}</td>
-   </tr>
-   <tr>
-    <td>Status:</td>
-    <td>{{status}}</td>
-   </tr>
+   <thead>
+    <tr>
+     <th>Player 1</th>
+     <th>Player 2</th>
+     <th>Status</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>{{player1}}</td>
+     <td>{{player2}}</td>
+     <td>{{status}}</td>
+    </tr>
+   </tbody>
   </table>
   
    <div id="game-board" class="game-board"></div>

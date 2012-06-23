@@ -14,7 +14,7 @@ class PlayGame( BaseHandler ):
         
         ## Make sure a game ID was actually provided
         if not gameid:
-            self.redirect("/error" )
+            self.redirect( "/error" )
         
         ## Initialize the game view
         game = GameView( gameid = gameid )
@@ -24,15 +24,21 @@ class PlayGame( BaseHandler ):
         player1 = User.by_id( int( game.player1 ) )
         player2 = User.by_id( int( game.player2 ) )
         
-        is_my_turn = self.user.key().id() == game.player_to_move()
+        user_id = self.user.key().id()
         
+        ## It's my turn if the game is active and i'm the player to move
+        is_my_turn = game.is_my_turn( user_id )
+        
+        status = game.get_detailed_status( user_id )
+        
+        ## Display the game to the user
         self.render( "play-game.html",
                      player1 = player1.name,
                      player2 = player2.name,
                      board = board,
                      turn = game.turn,
                      is_my_turn = is_my_turn,
-                     status = game.status )
+                     status = status )
         
     def post( self ):
         

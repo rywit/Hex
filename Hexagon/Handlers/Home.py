@@ -17,18 +17,40 @@ class Home( BaseHandler ):
         current = self._get_current( user_id )
         
         ## Query out pending games
-        pending = self._get_pending( user_id )
+        waiting, pending = self._get_pending( user_id )
         
-        self.render( "home.html", current = current, pending = pending )
+        ## Query out finished games
+        finished = self._get_finished( user_id )
+        
+        self.render( "home.html", current = current, pending = pending, waiting = waiting, finished = finished )
 
     def _get_current( self, user_id ):
         parent = Game.games_key()
         games1 = Game.all().filter( 'player1 =', user_id ).filter( "status =", "ACTIVE" ).ancestor( parent ).fetch( limit = 10 )
         games2 = Game.all().filter( 'player2 =', user_id ).filter( "status =", "ACTIVE" ).ancestor( parent ).fetch( limit = 10 )
-        
-        ## Combine lists
         games = list( games1 ) + list( games2 )
+        return self._build_game_set( games ) 
+    
+    def _get_pending( self, user_id ):
+        parent = Game.games_key()
+        waiting = Game.all().filter('player1 =', user_id ).filter( "status =", "CHALLENGE" ).ancestor( parent ).fetch( limit = 10 )
+        waiting = list( waiting )
+        waiting_games = self._build_game_set( waiting )
         
+        pending = Game.all().filter('player2 =', user_id ).filter( "status =", "CHALLENGE" ).ancestor( parent ).fetch( limit = 10 )
+        pending = list( pending )
+        pending_games = self._build_game_set( pending )
+        
+        return waiting_games, pending_games 
+
+    def _get_finished( self, user_id ):
+        parent = Game.games_key()
+        games1 = Game.all().filter('player1 =', user_id ).filter( "status =", "COMPLETE" ).ancestor( parent ).fetch( limit = 10 )
+        games2 = Game.all().filter('player2 =', user_id ).filter( "status =", "COMPLETE" ).ancestor( parent ).fetch( limit = 10 )
+        games = list( games1 ) + list( games2 )
+        return self._build_game_set( games ) 
+    
+    def _build_game_set( self, games ):
         data = []
         for game in games:
             
@@ -43,8 +65,4 @@ class Home( BaseHandler ):
             
         return data
     
-    def _get_pending( self, user_id ):
-        parent = Game.games_key()
-        games1 = Game.all().filter('player1 =', user_id ).filter( "status =", "CHALLENGE" ).ancestor( parent ).fetch( limit = 10 )
-        games2 = Game.all().filter('player2 =', user_id ).filter( "status =", "CHALLENGE" ).ancestor( parent ).fetch( limit = 10 )
-        return list( games1 ) + list( games2 )
+    

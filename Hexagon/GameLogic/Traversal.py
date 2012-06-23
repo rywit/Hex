@@ -2,11 +2,11 @@
 class Traversal:
     
     @classmethod
-    def makeNodes( cls, grid ):
+    def makeNodes( cls, grid, player ):
     
         nodes = [];
     
-        paddingrow = [ None for x in range( len( grid ) + 2 ) ] #@UnusedVariable
+        paddingrow = [ None for x in range( len( grid ) + 2 ) ]
         nodes.append( paddingrow )
     
         startingNodes = set();
@@ -24,7 +24,7 @@ class Traversal:
     
                 elem = row[ colnum ]
     
-                if elem == 0:
+                if elem != player:
                     noderow.append( None )
                 else:
                     node = Node( "[%d, %d]" % ( rownum, colnum ), isEnd )
@@ -94,17 +94,17 @@ class Traversal:
         return False
 
     @classmethod
-    def checkForTraversal( cls, board ):
+    def checkForTraversal( cls, board, player ):
 
         ## Check for traversals from the top to the bottom        
-        for node in cls.makeNodes( board ):
+        for node in cls.makeNodes( board, player ):
             if cls.hasTraversal( node, set() ):
                 return True
     
         ## Transpose grid, check for traversals from the left to the right
         trans = zip( *board )
 
-        for node in cls.makeNodes( trans ):
+        for node in cls.makeNodes( trans, player ):
             if cls.hasTraversal( node, set() ):
                 return True
     

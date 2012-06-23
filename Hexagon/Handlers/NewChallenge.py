@@ -5,8 +5,12 @@ from collections import namedtuple
 
 class NewChallenge( BaseHandler ):
     def get(self):
+        ## Make sure the user is logged in
+        if not self.user:
+            self.redirect( "/login" )
+            return
 
-        all_users = User.all().fetch( limit = 10 )
+        all_users = User.all().order( "-name" ).fetch( limit = 100 )
         all_users = list( all_users )
 
         ## Define a UserItem as a name and id
@@ -14,7 +18,8 @@ class NewChallenge( BaseHandler ):
         
         users = []
         for user in all_users:
-            users.append( UserItem( user.name, user.key().id() ) )
+            if user.name != self.user.name:
+                users.append( UserItem( user.name, user.key().id() ) )
         
         self.render( "new-challenge.html", users = users )
 

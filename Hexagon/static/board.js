@@ -19,7 +19,7 @@ $( document ).ready( function() {
 	// Determine which color the clicked square should be
 	var playerColor = colors[ playerNum ];
 	
-	var clickedOnce = false;
+	var clickedOnce = is_disabled;
 	
 	var stage = new Kinetic.Stage( {
 		container: "game-board",

@@ -15,15 +15,27 @@
   
   <h2>Pending Challenges</h2>
     {% if pending %}
-  <div>You have some pending games</div>
-    {% else %}
+     {% for game in pending %}
+      <div class="game">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}} <a href="/accept?gameid={{game.gameid}}">ACCEPT</a></div>
+     {% endfor %}
+    {% endif %}
+    
+    {% if waiting %}
+     {% for game in waiting %}
+      <div class="game">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}} - AWAITING ACCEPTANCE</div>
+     {% endfor %}
+    {% endif %}
+    
+    {% if not pending and not waiting %}
   <div class="faded">No pending games</div>    
     {% endif %}
   <hr>
 
   <h2>Finished Games</h2>
     {% if finished %}
-  <div>You have some finished</div>
+     {% for game in finished %}
+      <div class="game"><a href="/play?gameid={{game.gameid}}">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}}</a></div>
+     {% endfor %}
     {% else %}
   <div class="faded">No finished games</div>    
     {% endif %}

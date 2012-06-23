@@ -4,8 +4,39 @@
 
 {% block head %}
     {{ super() }}
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+	var FADE_SPEED = 500;
+
+	$( document ).ready( function() {
+		$( "#username" ).focus( function() {
+			$( "#username_desc" ).fadeIn( FADE_SPEED );
+		} );
+
+		$( "#username" ).blur( function() {
+	    	$( "#username_desc" ).fadeOut( FADE_SPEED );
+    	} );
+
+		$( "#email" ).focus( function() {
+			$( "#email_desc" ).fadeIn( FADE_SPEED );
+		} );
+
+		$( "#email" ).blur( function() {
+	    	$( "#email_desc" ).fadeOut( FADE_SPEED );
+    	} );
+    } );
+
+    </script>
+    
     <style type="text/css">
 .label {text-align: right}
+.note {
+	color: #555;
+	font-style: italic;
+	display: none;
+}
     </style>
 {% endblock %}
 
@@ -15,13 +46,16 @@
       <table>
         <tr>
           <td class="label">
-            Username
+            User Name
           </td>
           <td>
-            <input type="text" name="username" value="{{username}}">
+            <input type="text" name="username" id="username" value="{{username}}">
           </td>
           <td class="error">
             {{error_username}}
+          </td>
+          <td>
+           <span class="note" id="username_desc">This is how others will see you</span>
           </td>
         </tr>
 
@@ -54,13 +88,17 @@
             Email (optional)
           </td>
           <td>
-            <input type="text" name="email" value="{{email}}">
+            <input type="text" name="email" id="email" value="{{email}}">
           </td>
           <td class="error">
             {{error_email}}
           </td>
+          <td>
+           <span class="note" id="email_desc">By providing your email address, you can be notified by email of new challenges.</span>
+          </td>
         </tr>
       </table>
+
 
       <input type="submit">
     </form>

@@ -18,5 +18,5 @@ class Board():
     def update_board( self, row, col, player_num ):
         self.grid[ row ][ col ] = player_num
 
-    def is_finished( self ):
-        return Traversal.checkForTraversal( self.grid )
+    def is_finished( self, player_num ):
+        return Traversal.checkForTraversal( self.grid, player_num )

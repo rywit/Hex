@@ -6,6 +6,7 @@ Created on Jun 16, 2012
 from Models.Board import Board
 from Models.Game import Game
 from GameLogic.Exceptions import WrongTurnException, AlreadyCompleteException
+from Models.User import User
 
 class GameView():
     
@@ -26,7 +27,7 @@ class GameView():
         
         ## Save status
         self.status = "CHALLENGE"
-        self.winner = 0
+        self.winner = None
         self.turn = 1
 
         ## Create new Game instance
@@ -50,6 +51,7 @@ class GameView():
         self.player2 = self.game.player2
         self.status = self.game.status
         self.turn = self.game.turn
+        self.winner = self.game.winner
 
         ## Create a new board instance        
         self.board = Board( self.game.board )
@@ -71,14 +73,13 @@ class GameView():
         self.board.update_board( row, col, self.turn )
         
         ## Check if game is now finished
-        if self.board.is_finished():
-            self.winner = self.turn
+        if self.board.is_finished( self.turn ):
+            self.winner = self.player_to_move()
             self.status = "COMPLETE"
         else:
             ## Flip who's turn it is to move
             self.turn = ( self.turn % 2 ) + 1
             self.status = "ACTIVE"
-            self.winner = 0
     
         ## Update the underlying Game
         self.game.update_state( self.turn, self.board.serialize(), self.status, self.winner )
@@ -86,8 +87,39 @@ class GameView():
         ## Save underlying Game to the database
         self.game.put()
         
+    def update_status( self, new_status ):
+        self.status = new_status
+        self.game.status = new_status
+        self.game.put()
+        
     def player_to_move( self ):
         ## Make sure the correct user is making the move
         return self.player1 if self.turn == 1 else self.player2
+    
+    def is_my_turn( self, user_id ):
+        to_move = self.player_to_move()
+        return self.status == "ACTIVE" and to_move == user_id
+        
+    def get_detailed_status( self, user_id ):
 
+        ## Pending games
+        if self.status == "CHALLENGE":
+            player2_name = User.by_id( self.player2 ).name
+            return "WAITING FOR %s TO ACCEPT" % player2_name
+        
+        ## Active games
+        if self.is_my_turn( user_id ):
+            return "MY MOVE"
+        if self.status == "ACTIVE":
+            return "OPPONENT'S TURN"
 
+        ## Completed games
+        if self.status == "COMPLETE":
+            winner_name = User.by_id( self.winner ).name
+            return "%s HAS WON" % winner_name
+
+        
+        
+        
+        
+        
