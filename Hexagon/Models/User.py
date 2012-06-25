@@ -1,3 +1,4 @@
+from google.appengine.api import mail, memcache
 from google.appengine.ext import db
 from string import letters
 import hashlib
@@ -36,6 +37,7 @@ class User( db.Model ):
     @classmethod
     def register( cls, name, pw, email = None ):
         pw_hash = make_pw_hash( name, pw )
+        
         return User( parent = users_key(),
                      name = name,
                      pw_hash = pw_hash,
@@ -46,3 +48,31 @@ class User( db.Model ):
         u = cls.by_name( name )
         if u and valid_pw( name, pw, u.pw_hash ):
             return u
+        
+    @classmethod
+    def get_user_name( cls, user_id ):
+        
+        ## Look in memcache for this user name
+        data = memcache.get( "USERNAME" + str( user_id ) ) #@UndefinedVariable
+        
+        ## If user name was found, return it
+        if data is not None:
+            return data
+        else:
+            ## Look up user from database
+            user = cls.by_id( user_id )
+            
+            ## Grab user's name
+            user_name = user.name
+            
+            ## Add this user name to memcache
+            memcache.add( "USERNAME" + str( user_id ), user_name, 60 ) #@UndefinedVariable
+            
+            ## Return this user's name
+            return user_name
+        
+    def send_email( self, sender, subject, body ):
+        if not self.email:
+            return
+        
+        mail.send_mail( sender, self.email, subject, body )

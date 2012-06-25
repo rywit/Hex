@@ -1,6 +1,7 @@
 from BaseHandler import BaseHandler
 from Models.Game import Game
 from Models.User import User
+from Views.GameView import GameView
 
 class Home( BaseHandler ):
 
@@ -22,7 +23,11 @@ class Home( BaseHandler ):
         ## Query out finished games
         finished = self._get_finished( user_id )
         
-        self.render( "home.html", current = current, pending = pending, waiting = waiting, finished = finished )
+        self.render( "home.html",
+                     current = current,
+                     pending = pending,
+                     waiting = waiting,
+                     finished = finished )
 
     def _get_current( self, user_id ):
         parent = Game.games_key()
@@ -54,13 +59,19 @@ class Home( BaseHandler ):
         data = []
         for game in games:
             
-            u1 = User.by_id( game.player1 )
-            u2 = User.by_id( game.player2 )
+            gameid = game.key().id()
+            view = GameView( gameid = gameid )
+            
+            user_id = self.user.key().id()
+            
+            player1_name = User.get_user_name( view.player1 )
+            player2_name = User.get_user_name( view.player2 )
             
             data.append( {
-                "gameid": game.key().id(),
-                "player1": u1.name,
-                "player2": u2.name
+                "gameid": gameid,
+                "player1": player1_name,
+                "player2": player2_name,
+                "status": view.get_detailed_status( user_id )
             } )
             
         return data

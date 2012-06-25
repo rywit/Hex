@@ -5,11 +5,13 @@ from collections import namedtuple
 
 class NewChallenge( BaseHandler ):
     def get(self):
+        
         ## Make sure the user is logged in
         if not self.user:
             self.redirect( "/login" )
             return
 
+        ## Query out the other users
         all_users = User.all().order( "-name" ).fetch( limit = 100 )
         all_users = list( all_users )
 

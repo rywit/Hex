@@ -12,11 +12,13 @@ class GameView():
     
     def __init__( self, **kwargs ):
         
+        ## If a game id was provided, initialize the existing game
         if "gameid" in kwargs:
             self._initExisting( kwargs[ "gameid" ] )
+        ## Otherwise, intialize a new game between the two given players
         else:
             self._initNew( kwargs[ "player1" ], kwargs[ "player2" ] )
-        
+
     def _initNew( self, player1, player2 ):
         ## Create empty board
         self.board = Board()
@@ -38,6 +40,12 @@ class GameView():
         ## Save new game to database
         key = self.game.put()
         self.gameid = key.id()
+        
+        ## Send an email to player 2
+        User.by_id( self.player2 ).send_email( 
+            sender = "Hexagon <noreply@witsacco.com>",
+            subject = "You have been challenged to a game of Hexagon",
+            body = "No one has challenged you to a game of Hexagon." )
         
     def _initExisting( self, gameid ):
         
@@ -79,7 +87,6 @@ class GameView():
         else:
             ## Flip who's turn it is to move
             self.turn = ( self.turn % 2 ) + 1
-            self.status = "ACTIVE"
     
         ## Update the underlying Game
         self.game.update_state( self.turn, self.board.serialize(), self.status, self.winner )
@@ -104,19 +111,19 @@ class GameView():
 
         ## Pending games
         if self.status == "CHALLENGE":
-            player2_name = User.by_id( self.player2 ).name
-            return "WAITING FOR %s TO ACCEPT" % player2_name
+            player2_name = User.get_user_name( self.player2 )
+            return "Waiting for %s to accept challenge" % player2_name
         
         ## Active games
         if self.is_my_turn( user_id ):
-            return "MY MOVE"
+            return "My move"
         if self.status == "ACTIVE":
-            return "OPPONENT'S TURN"
+            return "Opponent's turn"
 
         ## Completed games
         if self.status == "COMPLETE":
-            winner_name = User.by_id( self.winner ).name
-            return "%s HAS WON" % winner_name
+            winner_name = User.get_user_name( self.winner )
+            return "%s has won" % winner_name
 
         
         

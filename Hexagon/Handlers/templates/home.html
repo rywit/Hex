@@ -6,7 +6,7 @@
   <h2>Current Games</h2>
     {% if current %}
      {% for game in current %}
-      <div class="game"><a href="/play?gameid={{game.gameid}}">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}}</a></div>
+      <div class="game"><a href="/play?gameid={{game.gameid}}">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}}</a> ({{game.status}})</div>
      {% endfor %}
     {% else %}
   <div class="faded">No current games</div>    
@@ -16,7 +16,7 @@
   <h2>Pending Challenges</h2>
     {% if pending %}
      {% for game in pending %}
-      <div class="game">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}} <a href="/accept?gameid={{game.gameid}}">ACCEPT</a></div>
+      <div class="game">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}} <a href="/accept?gameid={{game.gameid}}">ACCEPT CHALLENGE</a></div>
      {% endfor %}
     {% endif %}
     
@@ -34,7 +34,7 @@
   <h2>Finished Games</h2>
     {% if finished %}
      {% for game in finished %}
-      <div class="game"><a href="/play?gameid={{game.gameid}}">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}}</a></div>
+      <div class="game"><a href="/play?gameid={{game.gameid}}">Game #{{game.gameid}}: {{game.player1}} vs {{game.player2}}</a> ({{game.status}})</div>
      {% endfor %}
     {% else %}
   <div class="faded">No finished games</div>    

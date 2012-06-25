@@ -11,7 +11,7 @@ class Login( BaseHandler ):
 
         u = User.login( username, password ) #@UndefinedVariable
         if u:
-            self.login(u)
+            self.login( u )
             self.redirect( "/home" )
         else:
             msg = 'Invalid login'
