@@ -71,8 +71,8 @@ class User( db.Model ):
             ## Return this user's name
             return user_name
         
-    def send_email( self, sender, subject, body ):
+    def send_email( self, sender, subject, body, html ):
         if not self.email:
             return
         
-        mail.send_mail( sender, self.email, subject, body )
+        mail.send_mail( sender, self.email, subject, body, html = html )

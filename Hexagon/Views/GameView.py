@@ -1,11 +1,7 @@
-'''
-Created on Jun 16, 2012
-
-@author: ryanwitko
-'''
+from GameLogic.Email import HexEmail
+from GameLogic.Exceptions import WrongTurnException, AlreadyCompleteException
 from Models.Board import Board
 from Models.Game import Game
-from GameLogic.Exceptions import WrongTurnException, AlreadyCompleteException
 from Models.User import User
 
 class GameView():
@@ -42,11 +38,10 @@ class GameView():
         self.gameid = key.id()
         
         ## Send an email to player 2
-        User.by_id( self.player2 ).send_email( 
-            sender = "Hexagon <noreply@witsacco.com>",
-            subject = "You have been challenged to a game of Hexagon",
-            body = "No one has challenged you to a game of Hexagon." )
-        
+        player1_name = User.get_user_name( self.player1 )
+        player2_user = User.by_id( self.player2 )
+        HexEmail.sendChallenge( player2_user.email, player1_name )
+                
     def _initExisting( self, gameid ):
         
         self.gameid = gameid

@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+ <head>
     {% block head %}
     <link rel="stylesheet" href="css/style.css" />
     <title>{% block title %}{% endblock %} : Hexagon</title>
     {% endblock %}
-</head>
-<body>
- <div id="header">
+ </head>
+ <body>
+  <div id="header">
    <span class="title"><a href="/home">Hexagon</a></span>
    
    <div class="login-area">
@@ -23,12 +23,13 @@
     {% endif %}
   </div>
  
- </div>
+  </div>
 
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
         {% block footer %}
         &copy; Copyright 2012 by <a href="http://www.witsacco.com">Witsacco</a>.
         {% endblock %}
-    </div>
-</body>
+   </div>
+ </body>
+</html>

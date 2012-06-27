@@ -3,23 +3,25 @@
 {% block title %}New Challenge{% endblock %}
 
 {% block content %}
+
     <h2>Create New Game</h2>
     <form method="post">
-      <table>
-        <tr>
-          <td class="label">
-            Opponent
-          </td>
-          <td>
-            <select name="player2">
-             {% for user in users %}
-              <option value="{{user.id}}">{{user.name}}</option>
-             {% endfor %}
-            </select>
-          </td>
-        </tr>
-       </table>
-
-      <input type="submit" value="Send Challenge" />
+     <input type="hidden" name="formtype" value="challenge" /> 
+     <span class="label">Opponent</span>
+     <select name="player2">
+      {% for user in users %}
+       <option value="{{user.id}}">{{user.name}}</option>
+      {% endfor %} 
+     </select>
+     <input type="submit" value="Send Challenge" />
+    </form>
+    
+    <hr>
+    <h2>Invite a friend to play Hexagon</h2>
+    <form method="post">
+     <input type="hidden" name="formtype" value="invite" /> 
+     <span class="label">Email Address</span>
+     <input type="text" name="email" />
+     <input type="submit" value="Send Invite" />
     </form>
 {% endblock %}
