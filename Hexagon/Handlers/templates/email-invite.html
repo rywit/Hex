@@ -1,11 +1,23 @@
-{% extends "base.html" %}
+<html>
+ <head>
+  <style type="text/css">
 
-{% block title %}Hexagon Invite{% endblock %}
+body {
+	background-color: #EDEDED;
+}
 
-{% block content %}
+h3, h4, h5 {
+	margin-bottom: 10px;
+}
+
+  </style>
+ </head>
+ <body>
 
   <h3>You have been invited to play Hexagon by your friend {{inviter}}!</h3>
 
   <h4>Click <a href="http://hecksagonal.appspot.com">here</a> to sign up for Hexagon</h4>
-    
-{% endblock %}
+  
+  <h5>Hexagon is a game of strategy that is easy to learn but difficult to master.</h5>
+ </body>
+</html>

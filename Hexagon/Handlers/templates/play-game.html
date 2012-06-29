@@ -4,6 +4,9 @@
 
 {% block head %}
     {{ super() }}
+    
+<!--[if IE]><script src="excanvas.js"></script><![endif]-->
+
     <style type="text/css">
 canvas {
 	border: 1px solid #9C9898;
@@ -13,21 +16,80 @@ table {
 	border: 1px solid #444;
 	border-collapse: collapse;
 	margin-bottom: 20px;
+	box-shadow: 3px 3px 5px #888;
+	margin-left: 10px;
 }
 
 thead th {
 	background-color: #333399;
 	color: white;
 	font-weight: bold;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
 	border-bottom: 1px solid #333366;
 }
 
 tbody td {
-	padding: 5px;
+	padding: 5px 15px;
 	background-color: white;
 	font-style: italic;
+	white-space: nowrap;
+}
+
+td.rborder {
+	border-right: 1px solid gray;
+}
+
+.colorsquare {
+	height: 20px;
+	width: 30px;
+}
+
+.player1 .colorsquare {
+	background-color: red;
+}
+
+.player2 .colorsquare {
+	background-color: blue;
+}
+
+.main {
+	width: 820px;
+	height: 410px;
+	position: relative;
+	margin-left: 10px;
+}
+
+.main .game-board {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.main .buttons {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.main .instructions {
+	width: 230px;
+	height: 365px;
+	background-color: white;
+	border: 1px solid #444;
+	box-shadow: 3px 3px 5px #888;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0 10px 10px 10px;
+}
+
+h4 {
+	font-weight: bold;
+	font-size: 20px;
+	border-bottom: 2px solid #369;
+	color: #369;
+	margin-bottom: 5px;
 }
 
     </style>
@@ -55,30 +117,43 @@ var is_disabled = true;
   <table>
    <thead>
     <tr>
-     <th>Player 1</th>
-     <th>Player 2</th>
+     <th colspan="2">Player 1</th>
+     <th colspan="2">Player 2</th>
      <th>Status</th>
     </tr>
    </thead>
    <tbody>
     <tr>
-     <td>{{player1}}</td>
-     <td>{{player2}}</td>
+     <td class="player1">{{player1}}</td><td class="player1 rborder"><div class="colorsquare"></div></td>
+     <td class="player2">{{player2}}</td><td class="player2 rborder"><div class="colorsquare"></div></td>
      <td>{{status}}</td>
     </tr>
    </tbody>
   </table>
   
-   <div id="game-board" class="game-board"></div>
+   <div class="main">
+    <div id="game-board" class="game-board"></div>
+    <div class="instructions">
+     <h4>How To Play:</h4>
+     <p>Player 1 (red) and player 2 (blue) take turns marking hexagons with their color.</p>
+     <p>The goal is to form a continuous chain from top to bottom or left to right.</p>
+     <p>The chain does not have to be a straight line.</p>
+     <p>The first player to complete a chain wins the game.</p>
+     
+    </div>
    
-   {% if is_my_turn %}
-   <form method="post">
+    {% if is_my_turn %}
+    <div class="buttons">
+     <form method="post">
       <input type="text" name="gameid" hidden="hidden" value="{{gameid}}" />
       <input type="text" name="row" id="row" hidden="hidden" />
       <input type="text" name="col" id="col" hidden="hidden" />
 
 	  <input type="submit" name="submit" value="Submit Move" />
 	  <input type="submit" name="cancel" value="Cancel" />
-   </form>
-   {% endif %}   
+     </form>
+    </div>
+    {% endif %}
+   </div>
+   
 {% endblock %}
