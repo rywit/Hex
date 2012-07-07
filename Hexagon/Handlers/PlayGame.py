@@ -3,6 +3,7 @@ from Models.User import User
 from Views.GameView import GameView
 import logging
 from GameLogic.Exceptions import WrongTurnException
+from GameLogic.Email import HexEmail
 
 class PlayGame( BaseHandler ):
 
@@ -70,8 +71,14 @@ class PlayGame( BaseHandler ):
                     self.render( "/play?gameid=%s" % gameid, error = e.message )
                     return
                 
-                ## Check game status and redirect accordingly
+                ## Send email to opponent telling them it's their turn
+                player1_name = User.get_user_name( game.player1 )
+                player2 = User.by_id( game.player2 )
                 
+                if player2.email and player2.move_emails:
+                    HexEmail.sendMoveNotice( player2.email, player1_name )
+                
+                ## Redirect to homepage
                 self.redirect( "/home" )
             else:
                 logging.error( "That's not a valid game" )

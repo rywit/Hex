@@ -43,4 +43,22 @@ Sign up to play Hexagon at http://hecksagonal.appspot.com
         html = Handlers.BaseHandler.render_str( "email-invite.html", inviter = inviter )
         
         mail.send_mail( cls.sender, to, subject, body, html = html )
+
+    @classmethod
+    def sendMoveNotice( cls, to, opponent ):
         
+        ## If there is no email address provided, just leave
+        if not to:
+            return
+        
+        subject = "It's your turn to move in Hexagon game against %s" % opponent
+        
+        body = """
+Your friend %s just moved and it is now your turn!
+
+Check out your current games at at http://hecksagonal.appspot.com
+        """ % opponent
+
+        html = Handlers.BaseHandler.render_str( "email-move.html", opponent = opponent )
+        
+        mail.send_mail( cls.sender, to, subject, body, html = html )

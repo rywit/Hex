@@ -89,6 +89,7 @@ class GameView():
         ## Save underlying Game to the database
         self.game.put()
         
+        
     def update_status( self, new_status ):
         self.status = new_status
         self.game.status = new_status
