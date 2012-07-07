@@ -1,11 +1,12 @@
 from Handlers.AcceptChallenge import AcceptChallenge
+from Handlers.BaseHandler import BaseHandler
 from Handlers.Home import Home
 from Handlers.Login import Login
 from Handlers.Logout import Logout
 from Handlers.NewChallenge import NewChallenge
 from Handlers.PlayGame import PlayGame
 from Handlers.Register import Register
-from Handlers.BaseHandler import BaseHandler
+from Handlers.Settings import Settings
 import webapp2
 
 
@@ -23,6 +24,7 @@ app = webapp2.WSGIApplication([( "/", MainPage ),
                                ( "/accept", AcceptChallenge ),
                                ( "/challenge", NewChallenge ),
                                ( "/register", Register ),
+                               ( "/settings", Settings ),
                                ( "/home", Home )
                                ],
                               debug=True)

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+.label {
+	text-align: right;
+	width: 150px;
+	padding-right: 10px;
+}
+
+table {
+	border: 1px solid black;
+	background-color: white;
+	box-shadow: 3px 3px 5px #888;
+	padding: 10px;
+}
+
+.form-submit {
+	float: right;
+}
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <h2>User Settings</h2>
+
+    <form method="post">
+      <table>
+        <tr>
+          <td class="label">
+            Email Address
+          </td>
+          <td>
+            <input type="text" name="email" value="{{email}}" size="40" />
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">
+            Email Notification For Each Move?
+          </td>
+          <td>
+            <select name="move_emails" value="{{move_emails}}">
+             <option value="yes">Yes</option>
+             <option value="no">No</option>
+            </select>
+          </td>
+        </tr>
+        
+        <tr>
+         <td colspan="2">
+          <input class="form-submit" type="submit">
+         </td>        
+        </tr>
+      </table>
+
+    </form>
+    
+{% endblock %}

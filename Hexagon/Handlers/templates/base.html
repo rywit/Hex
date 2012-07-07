@@ -14,7 +14,9 @@
    <div class="login-area">
     {% if user %}
       <a class="login-link" href="/home">home</a>
-      | 
+      |
+      <a class="login-link" href="/settings">settings</a>
+      |
       {{user.name}} (<a class="login-link" href="/logout">log out</a>)
     {% else %}
       <a class="login-link" href="/login">login</a>

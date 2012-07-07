@@ -24,6 +24,7 @@ class User( db.Model ):
     name = db.StringProperty( required = True )
     pw_hash = db.StringProperty( required = True )
     email = db.StringProperty()
+    move_emails = db.BooleanProperty()
 
     @classmethod
     def by_id( cls, uid ):
@@ -41,7 +42,8 @@ class User( db.Model ):
         return User( parent = users_key(),
                      name = name,
                      pw_hash = pw_hash,
-                     email = email )
+                     email = email,
+                     move_emails = True )
 
     @classmethod
     def login( cls, name, pw ):
